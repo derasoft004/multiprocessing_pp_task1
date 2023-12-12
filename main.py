@@ -2,8 +2,8 @@
 # вычисления суммы элементов матрицы (параллелить вычисление суммы по столбцам или
 # строкам, итоговую сумму вычислять в общем потоке). Написанное приложение должно
 # быть консольным. Аргументы командной строки – размер матрицы и ее значнеия.
-
-from multiprocessing import Process, Pool
+import sys
+from multiprocessing import Pool
 import numpy as np
 from random import randint
 
@@ -13,8 +13,8 @@ def enter_the_matrix(n, m):
         new_column = []
         content.append(new_column)
         for j in range(m):
-            new_column.append(int(input(f'input element[{i + 1}][{j + 1}]: '))) # заполнение вручную
-            # new_column.append(randint(0, 10)) # рандомное заполнение
+            # new_column.append(int(input(f'input element[{i + 1}][{j + 1}]: '))) # заполнение вручную
+            new_column.append(randint(0, 10)) # рандомное заполнение
         content[i] = new_column
     return np.array([content[i] for i in range(n)])
 
@@ -22,9 +22,11 @@ def enter_the_matrix(n, m):
 def sum_elements(matrix):
     return sum(x for x in matrix)
 
-def run():
-    n = int(input('enter the matrix n: '))
-    m = int(input('enter the matrix m: '))
+def run(*argv):
+    n = int(sys.argv[1])
+    m = int(sys.argv[2])
+    # n = int(input('enter the matrix n: '))
+    # m = int(input('enter the matrix m: '))
     matrix = enter_the_matrix(n, m)
     print(matrix)
 
